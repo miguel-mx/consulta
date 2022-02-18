@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consulta{% endblock %}
+
+{% block body %}
+<div class="container">
+
+    <h2 class="mt-5">Votación para la nueva integrante de la Comisión Dictaminadora</h2>
+    <h3 class="text-secondary">Centro de Ciencias Matemáticas UNAM</h3>
+
+    {% if consulta.voto %}
+        {{ consulta.voto }}
+        <p class="lead my-3">Voto recibido para:</p>
+
+        <div class="row justify-content-md-center p-4">
+            <div class="col-8">
+                <div class="card card-input">
+                    <div class="card-body">
+                        <div class="d-flex align-items-baseline mb-2">
+                            <div class="nombre d-inline-flex">{{ consulta.voto.nombre }}</div><div class="correo d-flex ">{{ consulta.voto.email }}</div>
+                        </div>
+                        <div class="nombramiento">{{ consulta.voto.nombramiento }}<br>
+                            <span class="adscripcion">{{ consulta.voto.adscripcion}}</span>
+                        </div>
+
+                        <div class="areas mt-2">{{ consulta.voto.area }}</div>
+                        <div class="url"><a href="{{ consulta.voto.url }}" target="_blank">{{ consulta.voto.url }}</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+
+        <div class="row justify-content-md-center p-4">
+            <div class="col-8">
+                <form name="boleta" method="post">
+                    <div id="boleta">
+                    <fieldset class="mb-3">
+            {#            <legend class="col-form-label required">Category</legend>#}
+                        <div id="boleta_category">
+                            {% for elegible in elegibles %}
+                            <div class="form-check my-4">
+                                <label class="form-check-label required" for="boleta_category_{{ elegible.id }}">
+                                    <input type="radio" id="boleta_category_{{ elegible.id }}" name="boleta[category]" required="required" class="form-check-input" value="{{ elegible.id }}" onclick="enableVote()"/>
+                                    <div class="card card-input">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-baseline mb-2">
+                                                <div class="nombre d-inline-flex">{{ elegible.nombre }}</div><div class="correo d-flex ">{{ elegible.email }}</div>
+                                            </div>
+                                            <div class="nombramiento">{{ elegible.nombramiento }}<br>
+                                                <span class="adscripcion">{{ elegible.adscripcion}}</span>
+                                            </div>
+
+                                            <div class="areas mt-2">{{ elegible.area }}</div>
+                                            <div class="url"><a href="{{ elegible.url }}" target="_blank">{{ elegible.url }}</a></div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </fieldset>
+
+                    {# Token #}
+                    {{ form_row(form._token) }}
+{#                    <input type="hidden" id="boleta__token" name="boleta[_token]" value="e7d592da313f869fd071cb63cd245e5.nt-03CdGk87ASOARNvlqqZCz7o3jgJ1j2V-8ThsDCkg.2I6BkhEjov3zApl6Bost8KfKlN-F8d8oumzJDWxpfi-n6tCtYnfwoa4NsQ" /></div>#}
+
+                    <div class="mb-3"><button type="submit" id="boleta_votar" name="boleta[votar]" class="btn-success btn btn-lg" disabled>Votar</button></div>
+                </form>
+            </div>
+        </div>
+
+    {% endif %}
+
+</div>
+{% endblock %}
+ {% block javascripts %}
+     {{ parent() }}
+
+     <script>
+         function enableVote() {
+             document.getElementById("boleta_votar").disabled = false;
+         }
+     </script>
+ {% endblock %}

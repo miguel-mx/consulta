@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consulta{% endblock %}
+
+{% block body %}
+<div class="container">
+
+    <h2 class="mt-5">Votación para la nueva integrante de la Comisión Dictaminadora</h2>
+    <h3 class="text-secondary">Centro de Ciencias Matemáticas UNAM</h3>
+
+
+    <div class="row my-5">
+        <p>Ingrese su correo electrónico para recibir la URL de votación.</p>
+        <div class="col-12 col-md-4">
+            {{ form(form) }}
+        </div>
+    </div>
+
+</div>
+{% endblock %}
