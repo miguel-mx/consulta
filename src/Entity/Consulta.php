@@ -51,9 +51,10 @@ class Consulta
     private $slug;
 
     /**
-     * @ORM\OneToOne(targetEntity=Elegible::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Elegible::class, inversedBy="votos")
      */
     private $voto;
+
 
     public function getId(): ?int
     {
@@ -143,4 +144,5 @@ class Consulta
 
         return $this;
     }
+
 }

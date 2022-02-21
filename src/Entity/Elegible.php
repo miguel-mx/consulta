@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ElegibleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +48,16 @@ class Elegible
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $url;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Consulta::class, mappedBy="voto")
+     */
+    private $votos;
+
+    public function __construct()
+    {
+        $this->votos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -127,5 +139,35 @@ class Elegible
     public function __toString(): ?string
     {
         return $this->getNombre();
+    }
+
+    /**
+     * @return Collection<int, Consulta>
+     */
+    public function getVotos(): Collection
+    {
+        return $this->votos;
+    }
+
+    public function addVoto(Consulta $voto): self
+    {
+        if (!$this->votos->contains($voto)) {
+            $this->votos[] = $voto;
+            $voto->setVoto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVoto(Consulta $voto): self
+    {
+        if ($this->votos->removeElement($voto)) {
+            // set the owning side to null (unless already changed)
+            if ($voto->getVoto() === $this) {
+                $voto->setVoto(null);
+            }
+        }
+
+        return $this;
     }
 }
