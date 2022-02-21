@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ConsultaController extends AbstractController
 {
     /**
-     * @Route("/consulta", name="consulta")
+     * @Route("/", name="consulta")
      */
     public function index(Request $request, ManagerRegistry $doctrine): Response
     {
@@ -120,7 +120,7 @@ class ConsultaController extends AbstractController
     }
 
     /**
-     * @Route("/consulta/voto/{token}", name="consulta_voto")
+     * @Route("/voto/{token}", name="consulta_voto")
      */
     public function voto(Request $request, ManagerRegistry $doctrine, Consulta $consulta): Response
     {
