@@ -9,11 +9,11 @@
     <h3 class="text-secondary">Centro de Ciencias Matemáticas UNAM</h3>
 
     {% if consulta.voto %}
-        {{ consulta.voto }}
-        <p class="lead my-3">Voto recibido para:</p>
 
-        <div class="row justify-content-md-center p-4">
-            <div class="col-8">
+        <p class="lead mt-5 mb-3">Voto recibido para:</p>
+
+        <div class="row">
+            <div class="col-12 col-lg-8">
                 <div class="card card-input">
                     <div class="card-body">
                         <div class="d-flex align-items-baseline mb-2">
@@ -30,10 +30,30 @@
             </div>
         </div>
 
+        <hr class="my-5">
+
+        <div class="resultados row">
+            <div class="col-12 col-lg-6">
+                <p class="lead mb-4">Resultados hasta el momento</p>
+                <ul class="list-group">
+                    {% for elegible in elegibles %}
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between"><div>{{ elegible.nombre }}</div><div>{{ elegible.votos|length }}</div></div>
+
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
     {% else %}
 
+        <div class="alert alert-info mt-5">
+            Para votar seleccione solo una de las siguientes candidatas
+        </div>
+
         <div class="row justify-content-md-center p-4">
-            <div class="col-8">
+            <div class="col-12 col-lg-8">
                 <form name="boleta" method="post">
                     <div id="boleta">
                     <fieldset class="mb-3">
